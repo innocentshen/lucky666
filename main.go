@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -37,6 +38,15 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	if portStr := os.Getenv("PORT"); portStr != "" {
+		if p, err := strconv.Atoi(portStr); err == nil {
+			*listenPort = p
+		} else {
+			log.Printf("invalid PORT %s: %v", portStr, err)
+		}
+	}
+
 	config.InitAppInfo(version, date)
 
 	err := config.Read(*configureFileURL)
@@ -53,6 +63,12 @@ func main() {
 	}
 
 	gcf := config.GetConfig()
+
+	if portStr := os.Getenv("PORT"); portStr != "" {
+		if p, err := strconv.Atoi(portStr); err == nil {
+			gcf.BaseConfigure.AdminWebListenPort = p
+		}
+	}
 
 	config.BlackListInit()
 	config.WhiteListInit()
