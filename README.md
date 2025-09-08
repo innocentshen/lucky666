@@ -25,6 +25,7 @@
   - [OpenwrtIPK包安装](#OpenwrtIPK包安装)
   - [使用](#使用)
   - [Docker中使用](#docker中使用)
+  - [在 Vercel 部署](#在-vercel-部署)
   - [后台界面](#后台界面)
 
   - [开发编译](#开发编译)
@@ -155,6 +156,13 @@ Lucky 的核心程序完全采用 Golang 实现，具有高效、稳定、跨平
   ```bash
   docker run -d --name lucky --restart=always --net=host -v /root/luckyconf:/goodluck gdy666/lucky
   ```
+
+
+## 在 Vercel 部署
+
+- 安装并登录 [Vercel CLI](https://vercel.com/docs/cli)。
+- 在项目根目录执行 `vercel` 命令即可部署，默认使用仓库中的 `vercel.json` 配置通过 Docker 镜像运行 Lucky。
+- Vercel 会注入 `PORT` 环境变量，程序会自动读取该端口进行监听。
 
 
 ## 宝塔Docker安装
